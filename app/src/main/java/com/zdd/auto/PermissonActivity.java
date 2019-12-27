@@ -22,7 +22,8 @@ public class PermissonActivity extends FragmentActivity implements EasyPermissio
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //String[] perms = {Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION};
-        String[] perms = {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_PHONE_STATE};
+        //动态申请的权限也要再manifest中声明
+        String[] perms = {Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_PHONE_STATE};
 
         EasyPermissions.requestPermissions(
                 new PermissionRequest.Builder(this, REQUEST_CAMERA, perms)

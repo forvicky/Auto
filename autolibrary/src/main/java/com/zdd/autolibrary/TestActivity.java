@@ -12,17 +12,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import com.zdd.autolibrary.model.ImgRect;
 import com.zdd.autolibrary.opencv.OpencvHelper;
 import com.zdd.autolibrary.sdk.Auto;
 import com.zdd.autolibrary.utils.FileUtil;
 import com.zdd.autolibrary.utils.ShellUtil;
-
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 /**
  * 模板的截图一定要从原图大小中截取，不能缩放
