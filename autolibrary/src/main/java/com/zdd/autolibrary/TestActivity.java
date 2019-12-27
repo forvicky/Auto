@@ -24,6 +24,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+ * 模板的截图一定要从原图大小中截取，不能缩放
+ * decodeResource取出来的图片大小跟所放的文件夹目录有关，drawable-xxhdpi。本地和resource的bitmap大小一定要对应上
+ */
 public class TestActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView imageView;
     private TextView tvResult;
@@ -78,10 +82,6 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 
                     Log.d("zdd","width="+bitmap.getWidth()+"    height="+bitmap.getHeight());
                     imageView.setImageBitmap(bitmap);
-
-                    Bitmap bitmap3  = BitmapFactory.decodeResource(getResources(), R.drawable.test9);
-
-
 
                     Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.test10);
                     ImgRect imgRect=OpencvHelper.matchBitmap(bitmap,bitmap2,Bitmap.Config.ARGB_8888,5);
