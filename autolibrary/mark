@@ -1,0 +1,3 @@
+input tap 255 255     //按下x=255,y=255的坐标点
+
+screencap -p /data/test.png   //截屏保存到/data目录下，-p保存为png格式
