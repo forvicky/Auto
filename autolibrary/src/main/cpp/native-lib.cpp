@@ -80,6 +80,11 @@ Java_com_zdd_autolibrary_opencv_OpencvHelper_matchBitmap(JNIEnv *env,jclass type
         env->SetIntField(rect_,width,smallMat.cols);
         env->SetIntField(rect_,y,matchLocation.y);
         env->SetIntField(rect_,height,smallMat.rows);
+    }else{
+        env->SetIntField(rect_,x,-1);
+        env->SetIntField(rect_,y,-1);
+
+
     }
 
 

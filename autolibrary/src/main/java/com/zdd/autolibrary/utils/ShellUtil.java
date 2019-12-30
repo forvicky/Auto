@@ -1,5 +1,7 @@
 package com.zdd.autolibrary.utils;
 
+import android.util.Log;
+
 import java.io.OutputStream;
 
 /**
@@ -27,6 +29,7 @@ public class ShellUtil {
         if(!cmd.contains(LINE_SEP))
             cmdLine=cmd+LINE_SEP;
 
+        Log.d("zdd","执行 cmd="+cmd);
         try {
             // 申请获取root权限，这一步很重要，不然会没有作用
             if(outputStream==null){

@@ -30,10 +30,6 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final String FILE_NAME="lbpcascade_frontalface.xml";
 
-    static {//加载so库
-        System.loadLibrary("native-lib");
-    }
-
     private File mCascade;
 
     @Override
@@ -56,6 +52,35 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                 Auto.click(255,246);
             }
         },2000);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Auto.click(100,100);
+            }
+        },2000);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Auto.startApp(TestActivity.this,"com.foreverht.newland.workplus");
+            }
+        },5000);
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Auto.finishApp("com.foreverht.newland.workplus");
+            }
+        },7000);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Auto.startApp(TestActivity.this,"com.foreverht.newland.workplus");
+            }
+        },9000);
 
 
         new Handler().postDelayed(new Runnable() {

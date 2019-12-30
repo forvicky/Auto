@@ -4,8 +4,8 @@ package com.zdd.autolibrary.model;
  * Created by zdd on 2019/12/26
  */
 public class ImgRect {
-    private int x;
-    private int y;
+    private int x=-1;
+    private int y=-1;
     private int width;
     private int height;
 
