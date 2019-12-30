@@ -10,6 +10,8 @@
         >
         <activity android:name=".TestActivity">
         </activity>
+
+        <service android:name=".TaskService"/>
     </application>
 
 </manifest>
