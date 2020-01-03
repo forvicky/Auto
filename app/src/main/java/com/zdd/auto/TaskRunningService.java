@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Binder;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import com.zdd.autolibrary.sdk.Auto;
@@ -25,11 +26,18 @@ public class TaskRunningService extends Service {
 
     private MyBinder mBinder=new MyBinder();
 
+    private PowerManager.WakeLock wakeLock;
+
     @Override
     public void onCreate() {
         super.onCreate();
         Log.d("zdd", "TaskRunningService onCreate");
         running=true;
+
+        //增加屏幕常亮方法，屏幕暗淡对截图会有影响
+        PowerManager powerManager=(PowerManager) getSystemService(POWER_SERVICE);
+        wakeLock=powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK,"myapp:MyWakelockTag");
+        wakeLock.acquire();
     }
 
     @Override
@@ -69,7 +77,7 @@ public class TaskRunningService extends Service {
 
                     Log.d("zdd","delay time="+delay);
 
-                    Auto.doTaskAtTimeWorkDelay(new int[]{-1}, new int[]{-1},delay, new Auto.TaskListener() {
+                    Auto.doTaskAtTimeWorkDelay(new int[]{15}, new int[]{32},delay, new Auto.TaskListener() {
                         @Override
                         public void doTask() {
                             Auto.finishApp(PACKAGE_NAME);
@@ -134,6 +142,7 @@ public class TaskRunningService extends Service {
         Log.d("zdd", "TaskRunningService onDestroy");
 
         running=false;
+        wakeLock.release();
     }
 
     @Nullable

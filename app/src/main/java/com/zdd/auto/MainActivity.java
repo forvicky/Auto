@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
 
@@ -64,7 +65,5 @@ public class MainActivity extends PermissonActivity {
     protected void onDestroy() {
         super.onDestroy();
         ShellUtil.exitShell();
-
-
     }
 }
