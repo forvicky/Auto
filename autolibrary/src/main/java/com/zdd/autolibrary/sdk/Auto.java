@@ -5,15 +5,19 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.util.Log;
 
 import com.zdd.autolibrary.R;
 import com.zdd.autolibrary.model.ImgRect;
 import com.zdd.autolibrary.opencv.OpencvHelper;
+import com.zdd.autolibrary.utils.ImageUtil;
 import com.zdd.autolibrary.utils.ShellUtil;
 
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Calendar;
 
 /**
@@ -47,12 +51,14 @@ public class Auto {
     public static boolean findImg(Context context, int resId,String mark) {
         Log.d("zdd","找图中...||"+mark);
         screencap(SCREEN_CAP);
-        sleep(2000);
+        sleep(3000);
 
-        FileInputStream fis = null;
+        InputStream fis = null;
         ImgRect imgRect = new ImgRect();
         try {
-            fis = new FileInputStream(SCREEN_CAP);
+            fis = new BufferedInputStream(new FileInputStream(SCREEN_CAP),16*1024);
+            fis.mark(16*1024);
+
             Bitmap bitmap = BitmapFactory.decodeStream(fis);
 
             if(bitmap==null)

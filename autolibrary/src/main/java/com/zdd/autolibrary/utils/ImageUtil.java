@@ -9,12 +9,14 @@ import android.graphics.ImageFormat;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 
 /**
@@ -23,6 +25,22 @@ import java.nio.ByteBuffer;
 public class ImageUtil {
     private ImageUtil() {
     }
+
+    public static Bitmap decodeSampledBitmapFromStream(InputStream is, Rect outPadding){
+
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(is, outPadding, options);
+        try {
+            is.reset();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeStream(is, outPadding, options);
+    }
+
 
     public static void saveNV21ToFile(byte[] var0, int width,int height, String var2) {
         Bitmap var3;

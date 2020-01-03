@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -19,16 +20,22 @@ public class TaskRunningService extends Service {
     private static final String PACKAGE_NAME="com.foreverht.newland.workplus";
     private final Context CONTEXT= TaskRunningService.this;
 
-    private static final String TAG = TaskRunningService.class.getSimpleName();
+    private boolean running;
+    private boolean finished=false;
+
+    private MyBinder mBinder=new MyBinder();
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d(TAG, "onCreate()");
+        Log.d("zdd", "TaskRunningService onCreate");
+        running=true;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d("zdd", "TaskRunningService onStartCommand");
+
         Notification.Builder builder=new Notification.Builder((this.getApplicationContext()));
         Intent nfIntent=new Intent();
 
@@ -48,24 +55,30 @@ public class TaskRunningService extends Service {
             @Override
             public void run() {
                 super.run();
-                while (true){
+                while (!finished){
                     Log.d("zdd","TaskRunningService Thread.run...");
 
-                    Auto.click(100,200);
+                    if(!running)
+                        continue;
+
+//                    Auto.click(100,300);
 
                     Random random=new Random();
-                    int delay=random.nextInt(10)*60*1000;
+                    int delay=random.nextInt(1)*60*1000;
 
-                    delay=0;
+
                     Log.d("zdd","delay time="+delay);
 
-                    Auto.doTaskAtTimeWorkDelay(new int[]{0,7}, new int[]{0,30},delay, new Auto.TaskListener() {
+                    Auto.doTaskAtTimeWorkDelay(new int[]{-1}, new int[]{-1},delay, new Auto.TaskListener() {
                         @Override
                         public void doTask() {
                             Auto.finishApp(PACKAGE_NAME);
                             Auto.sleep(3000);
                             Auto.startApp(CONTEXT,PACKAGE_NAME);
-                            while(true){
+                            Auto.sleep(6000);
+
+
+                            while(running){
                                 if(Auto.findImg(CONTEXT,R.drawable.yy,"应用")==true){
                                     break;
                                 }
@@ -74,15 +87,15 @@ public class TaskRunningService extends Service {
                                     Auto.sleep(2000);
                                     Auto.inputTxt("zdd@2093419");
                                     Auto.sleep(2000);
-
-                                    Auto.findImg(CONTEXT,R.drawable.dl,"登录");
                                 }
+
+                                Auto.findImg(CONTEXT,R.drawable.dl,"登录");
 
                             }
 
                             Auto.sleep(2000);
 
-                            while(true){
+                            while(running){
                                 if(Auto.findImg(CONTEXT,R.drawable.ydkq,"移动考勤")==true){
                                     break;
                                 }
@@ -91,7 +104,7 @@ public class TaskRunningService extends Service {
                             Auto.sleep(5000);
 
 
-                            while(true){
+                            while(running){
                                 if(Auto.findImg(CONTEXT,R.drawable.ljdk,"立即打卡")==true){
                                     Auto.sleep(2000);
                                     Auto.finishApp(PACKAGE_NAME);
@@ -115,10 +128,32 @@ public class TaskRunningService extends Service {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("zdd", "TaskRunningService onDestroy");
+
+        running=false;
+    }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return mBinder;
+    }
+
+    class MyBinder extends Binder{
+        public void start(){
+            running=true;
+        }
+
+        public void pause(){
+            running=false;
+        }
+
+        public void finish(){
+            finished=true;
+        }
     }
 
 }
