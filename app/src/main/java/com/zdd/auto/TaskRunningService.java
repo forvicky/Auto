@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
@@ -66,25 +67,37 @@ public class TaskRunningService extends Service {
                 while (!finished){
                     Log.d("zdd","TaskRunningService Thread.run...");
 
-                    if(!running)
-                        continue;
-
-//                    Auto.click(100,300);
-
                     Random random=new Random();
-                    int delay=random.nextInt(1)*60*1000;
-
+                    int delay=random.nextInt(6)*60*1000;
 
                     Log.d("zdd","delay time="+delay);
-
-                    Auto.doTaskAtTimeWorkDelay(new int[]{15}, new int[]{32},delay, new Auto.TaskListener() {
+                   // new int[]{7,8,17,20,0}, new int[]{30,10,30,0,0}
+                    Auto.doTaskAtTimeWorkDelay(new int[]{7,8,17,20,0,14}, new int[]{30,10,30,0,0,56},delay, new Auto.TaskListener() {
                         @Override
                         public void doTask() {
+                            running=true;
                             Auto.finishApp(PACKAGE_NAME);
                             Auto.sleep(3000);
                             Auto.startApp(CONTEXT,PACKAGE_NAME);
                             Auto.sleep(6000);
 
+
+                            new Thread(){
+                                @Override
+                                public void run() {
+                                    super.run();
+
+                                    try {
+                                        Thread.sleep(20*60*1000);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    running=false;
+                                    Auto.finishApp(PACKAGE_NAME);
+                                    Log.d("zdd","结束异常任务");
+                                }
+                            }.start();
 
                             while(running){
                                 if(Auto.findImg(CONTEXT,R.drawable.yy,"应用")==true){
