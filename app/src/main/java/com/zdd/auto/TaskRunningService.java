@@ -65,14 +65,13 @@ public class TaskRunningService extends Service {
             public void run() {
                 super.run();
                 while (!finished){
-                    Log.d("zdd","TaskRunningService Thread.run...");
+//                    Log.d("zdd","TaskRunningService Thread.run...");
 
                     Random random=new Random();
                     int delay=random.nextInt(6)*60*1000;
 
-                    Log.d("zdd","delay time="+delay);
-                   // new int[]{7,8,17,20,0}, new int[]{30,10,30,0,0}
-                    Auto.doTaskAtTimeWorkDelay(new int[]{7,8,17,20,0,14}, new int[]{30,10,30,0,0,56},delay, new Auto.TaskListener() {
+//                    Log.d("zdd","delay time="+delay);
+                    Auto.doTaskAtTimeWorkDelay(new int[]{7,8,17,20,10,11,14}, new int[]{30,10,30,0,0,0,30},delay, new Auto.TaskListener() {
                         @Override
                         public void doTask() {
                             running=true;

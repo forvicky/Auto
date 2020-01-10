@@ -115,7 +115,7 @@ public class Auto {
         int mHour = mCalendar.get(Calendar.HOUR_OF_DAY);
         int mMinuts = mCalendar.get(Calendar.MINUTE);
 
-        Log.d("zdd","mHour="+mHour+" mMinuts="+mMinuts);
+//        Log.d("zdd","mHour="+mHour+" mMinuts="+mMinuts);
 
         int week = mCalendar.get(Calendar.DAY_OF_WEEK);
 
