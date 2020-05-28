@@ -117,11 +117,12 @@ public class TaskRunningService extends Service {
                     Log.d("zdd", "TaskRunningService Thread.run...");
 
                     Random random = new Random();
-                    //int delay = random.nextInt(6) * 60 * 1000;
-                    int delay=0;
-//                    new int[]{7, 17}, new int[]{30, 30}
+                    int delay = random.nextInt(2) * 60 * 1000;
+//                    int delay=0;
+//                    new int[]{7, 17}, new int[]{50, 30}
                 //    new int[]{-1}, new int[]{-1}
-                    Auto.doTaskAtTimeWorkDelay(new int[]{11,14,15,16,17}, new int[]{10,20,30,40,00}, delay, new Auto.TaskListener() {
+                    //new int[]{11,14,15,16,17}, new int[]{10,20,30,40,00}
+                    Auto.doTaskAtTimeWorkDelay(new int[]{7,8,17}, new int[]{50,20,30}, delay, new Auto.TaskListener() {
                         @Override
                         public void doTask() {
                             Auto.open();
@@ -135,22 +136,22 @@ public class TaskRunningService extends Service {
 
 
                             //先注释看看任务执行异常点
-//                            new Thread(){
-//                                @Override
-//                                public void run() {
-//                                    super.run();
-//
-//                                    try {
-//                                        Thread.sleep(20*60*1000);
-//                                    } catch (InterruptedException e) {
-//                                        e.printStackTrace();
-//                                    }
-//
-//                                    running=false;
-//                                    Auto.finishApp(PACKAGE_NAME);
-//                                    Log.d("zdd","结束异常任务");
-//                                }
-//                            }.start();
+                            new Thread(){
+                                @Override
+                                public void run() {
+                                    super.run();
+
+                                    try {
+                                        Thread.sleep(20*60*1000);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    running=false;
+                                    Auto.finishApp(PACKAGE_NAME);
+                                    Log.d("zdd","结束异常任务");
+                                }
+                            }.start();
 
                             while (running) {
                                 if (Auto.findImg(CONTEXT, R.drawable.yy, "应用") == true) {
