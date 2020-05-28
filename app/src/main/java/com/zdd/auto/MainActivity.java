@@ -9,8 +9,26 @@ import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
 
+import com.upyun.library.common.Params;
+import com.upyun.library.common.UploadEngine;
+import com.upyun.library.listener.UpCompleteListener;
+import com.upyun.library.utils.UpYunUtils;
 import com.zdd.autolibrary.sdk.Auto;
 import com.zdd.autolibrary.utils.ShellUtil;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends PermissonActivity {
     Intent intent;
@@ -34,11 +52,16 @@ public class MainActivity extends PermissonActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         intent = new Intent(this, TaskRunningService.class);
+
         startService(intent);
         bindService(intent, connection, BIND_AUTO_CREATE);
 
+
+
     }
+
 
     public void clickListener(View view) {
         int id = view.getId();
@@ -64,6 +87,6 @@ public class MainActivity extends PermissonActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ShellUtil.exitShell();
+
     }
 }

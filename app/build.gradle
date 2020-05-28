@@ -36,4 +36,6 @@ dependencies {
     implementation project(':autolibrary')
     implementation 'pub.devrel:easypermissions:2.0.0'
 
+    implementation 'com.upyun:upyun-android-sdk:2.1.2'
+
 }

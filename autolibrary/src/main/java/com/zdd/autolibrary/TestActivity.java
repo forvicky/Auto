@@ -86,7 +86,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Auto.screencap("/mnt/sdcard/test.png");
+//                Auto.screencap("/mnt/sdcard/test.png");
 
 
 
@@ -145,7 +145,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ShellUtil.exitShell();
+
     }
 
     @Override
