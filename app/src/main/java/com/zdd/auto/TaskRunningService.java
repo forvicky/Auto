@@ -120,12 +120,13 @@ public class TaskRunningService extends Service {
                     //int delay = random.nextInt(6) * 60 * 1000;
                     int delay=0;
 //                    new int[]{7, 17}, new int[]{30, 30}
-
-                    Auto.doTaskAtTimeWorkDelay(new int[]{-1}, new int[]{-1}, delay, new Auto.TaskListener() {
+                //    new int[]{-1}, new int[]{-1}
+                    Auto.doTaskAtTimeWorkDelay(new int[]{11,14,15,16,17}, new int[]{10,20,30,40,00}, delay, new Auto.TaskListener() {
                         @Override
                         public void doTask() {
                             Auto.open();
-
+                            Auto.unlock();
+                            Auto.sleep(3000);
                             running = true;
                             Auto.finishApp(PACKAGE_NAME);
                             Auto.sleep(3000);
@@ -179,8 +180,8 @@ public class TaskRunningService extends Service {
 
                             while (running) {
                                 if (Auto.findImg(CONTEXT, R.drawable.ljdk, "立即打卡") == true) {
+                                    Auto.sleep(5000);
                                     uploadFile("/mnt/sdcard/result.png");
-
                                     Auto.sleep(5000);
                                     Auto.finishApp(PACKAGE_NAME);
                                     break;

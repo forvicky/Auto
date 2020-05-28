@@ -71,6 +71,10 @@ public class Auto {
         ShellUtil.execShellCmd(String.format("input keyevent 224"));
     }
 
+    public static void unlock(){
+        ShellUtil.execShellCmd(String.format("input swipe 500 1000 500 100"));
+    }
+
     public static void close(){
         ShellUtil.execShellCmd(String.format("input keyevent 223"));
 

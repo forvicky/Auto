@@ -58,8 +58,31 @@ public class MainActivity extends PermissonActivity {
         startService(intent);
         bindService(intent, connection, BIND_AUTO_CREATE);
 
+        //test();
 
+    }
 
+    private void test() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+
+                while (true) {
+                    Auto.open();
+                    Auto.unlock();
+
+                    try {
+                        Thread.sleep(3 * 1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    Auto.close();
+                }
+
+            }
+        }.start();
     }
 
 
