@@ -75,7 +75,7 @@ Java_com_zdd_autolibrary_opencv_OpencvHelper_matchBitmap(JNIEnv *env,jclass type
     jfieldID width=env->GetFieldID(rectClass,"width","I");
     jfieldID height=env->GetFieldID(rectClass,"height","I");
 
-    if(maxValue>0.95){
+    if(maxValue>0.90){
         env->SetIntField(rect_,x,matchLocation.x);
         env->SetIntField(rect_,width,smallMat.cols);
         env->SetIntField(rect_,y,matchLocation.y);

@@ -3,34 +3,27 @@ package com.zdd.auto;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Binder;
 import android.os.Build;
-import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
-
 import com.upyun.library.common.Params;
 import com.upyun.library.common.UploadEngine;
 import com.upyun.library.listener.UpCompleteListener;
 import com.upyun.library.utils.UpYunUtils;
 import com.zdd.autolibrary.sdk.Auto;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -119,10 +112,11 @@ public class TaskRunningService extends Service {
                     Random random = new Random();
                     int delay = random.nextInt(2) * 60 * 1000;
 //                    int delay=0;
-//                    new int[]{7, 17}, new int[]{50, 30}
+//                    new int[]{7,8,17}, new int[]{50,20,30}
                 //    new int[]{-1}, new int[]{-1}
-                    //new int[]{11,14,15,16,17}, new int[]{10,20,30,40,00}
-                    Auto.doTaskAtTimeWorkDelay(new int[]{7,8,17}, new int[]{50,20,30}, delay, new Auto.TaskListener() {
+                    //new int[]{9,10,11,14,15,16,17}, new int[]{40,20,10,20,30,40,00}
+
+                    Auto.doTaskAtTimeWorkDelay(new int[]{7,8,9,17,17}, new int[]{50,20,20,00,30}, delay, new Auto.TaskListener() {
                         @Override
                         public void doTask() {
                             Auto.open();
@@ -160,7 +154,18 @@ public class TaskRunningService extends Service {
 
                                 if (Auto.findImg(CONTEXT, R.drawable.mmdl, "密码登录") == true) {
                                     Auto.sleep(2000);
-                                    Auto.inputTxt("zdd@2093419");
+//                                    Auto.inputTxt("zdd@2093419");
+                                    Auto.inputTxt("z");
+                                    Auto.inputTxt("d");
+                                    Auto.inputTxt("d");
+                                    Auto.inputTxt("@");
+                                    Auto.inputTxt("2");
+                                    Auto.inputTxt("0");
+                                    Auto.inputTxt("9");
+                                    Auto.inputTxt("3");
+                                    Auto.inputTxt("4");
+                                    Auto.inputTxt("1");
+                                    Auto.inputTxt("9");
                                     Auto.sleep(2000);
                                 }
 

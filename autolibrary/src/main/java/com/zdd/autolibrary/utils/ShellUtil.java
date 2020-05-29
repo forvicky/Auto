@@ -13,6 +13,7 @@ import java.io.OutputStream;
  * 2、outputStream最好复用，不然启动一次su很慢，会导致adb命令执行缓慢
  * 3、su不退出的话，会一直阻塞在 process.waitFor()
  * 4、截屏不要保存到同一个文件中，上传文件是异步的
+ * 5、搜狗输入法会影响input text 的准确性
  * Created by zdd on 2019/11/20
  */
 public class ShellUtil {
