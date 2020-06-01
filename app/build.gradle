@@ -37,5 +37,8 @@ dependencies {
     implementation 'pub.devrel:easypermissions:2.0.0'
 
     implementation 'com.upyun:upyun-android-sdk:2.1.2'
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+
 
 }

@@ -5,30 +5,36 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
 
-import com.upyun.library.common.Params;
-import com.upyun.library.common.UploadEngine;
-import com.upyun.library.listener.UpCompleteListener;
-import com.upyun.library.utils.UpYunUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.zdd.auto.http.BaseHeaderInterceptor;
+import com.zdd.auto.http.BaseResponse;
+import com.zdd.auto.http.NlpLoggingInterceptor;
+import com.zdd.auto.http.SSLSocketFactoryUtils;
+import com.zdd.auto.http.model.Img;
+import com.zdd.auto.http.model.Token;
 import com.zdd.autolibrary.sdk.Auto;
-import com.zdd.autolibrary.utils.ShellUtil;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.BufferedSink;
 
 public class MainActivity extends PermissonActivity {
     Intent intent;
@@ -58,11 +64,11 @@ public class MainActivity extends PermissonActivity {
         startService(intent);
         bindService(intent, connection, BIND_AUTO_CREATE);
 
-        //test();
-
+        //test1();
+//        test2();
     }
 
-    private void test() {
+    private void test1() {
         new Thread() {
             @Override
             public void run() {
@@ -83,6 +89,91 @@ public class MainActivity extends PermissonActivity {
 
             }
         }.start();
+    }
+
+
+    private void test2() {
+        Auto.screencap("/mnt/sdcard/result.png");
+
+
+        final OkHttpClient mClient =new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS)
+                .addInterceptor(new BaseHeaderInterceptor())
+                .sslSocketFactory(SSLSocketFactoryUtils.createSSLSocketFactory(), SSLSocketFactoryUtils.createTrustAllManager())
+                .hostnameVerifier(new SSLSocketFactoryUtils.TrustAllHostnameVerifier())                                          //信任所有主机名
+                .addInterceptor(new NlpLoggingInterceptor(new NlpLoggingInterceptor.Logger() {
+                    @Override
+                    public void log(String message) {
+                        Log.d("zdd",message);
+                    }
+                }).setLevel(NlpLoggingInterceptor.Level.BODY)).build();
+
+        RequestBody requestBody=new RequestBody() {
+            @Nullable
+            @Override
+            public MediaType contentType() {
+                return null;
+            }
+
+            @Override
+            public void writeTo(@NotNull BufferedSink bufferedSink) throws IOException {
+
+            }
+        };
+        Request request = new Request.Builder()
+                .addHeader("User-Agent","PostmanRuntime/7.25.0")
+                .url("https://sm.ms/api/v2/token?username=zdd2389&password=zdd2093419")
+                .post(requestBody)
+                .build();
+
+        mClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                final BaseResponse<Token> tokenBaseResponse = new Gson().fromJson(response.body().string(), new TypeToken<BaseResponse<Token>>() {
+                }.getType());
+
+                Log.d("zdd",new Gson().toJson(tokenBaseResponse));
+
+
+
+
+                RequestBody fileBody = RequestBody.create(MediaType.parse("image/png"), new File("/mnt/sdcard/result.png"));
+                RequestBody requestBody = new MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart("smfile", "smfile", fileBody)
+                        .build();
+
+
+                Request fileRequest = new Request.Builder()
+                        .addHeader("User-Agent","PostmanRuntime/7.25.0")
+                        .addHeader("Content-Type","multipart/form-data")
+                        .addHeader("Authorization",tokenBaseResponse.getData().getToken())
+                        .url("https://sm.ms/api/v2/upload")
+                        .post(requestBody)
+                        .build();
+
+
+                mClient.newCall(fileRequest).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        final BaseResponse<Img> imgBaseResponse = new Gson().fromJson(response.body().string(), new TypeToken<BaseResponse<Img>>() {
+                        }.getType());
+                        Log.d("zdd",new Gson().toJson(imgBaseResponse));
+                        Log.d("zdd","地址="+imgBaseResponse.getData().getUrl());
+                    }
+                });
+            }
+        });
+
     }
 
 
